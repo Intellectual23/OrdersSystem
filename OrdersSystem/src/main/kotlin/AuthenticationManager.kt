@@ -3,7 +3,7 @@ import java.security.MessageDigest
 
 class AuthenticationManager {
     public var currentUser: User? = null
-    private val users: MutableList<User> = mutableListOf();
+    public val users: MutableList<User> = mutableListOf();
 
     init {
         users.add(User("Admin", hashPassword("AdminPass"), UserType.ADMIN))
