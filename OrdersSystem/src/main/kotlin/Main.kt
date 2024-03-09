@@ -1,5 +1,5 @@
-package org.example
-
-fun main() {
-    println("Hello World!")
+// Запускаем!
+fun main(args: Array<String>) {
+    val app = ConsoleApp()
+    app.run()
 }
