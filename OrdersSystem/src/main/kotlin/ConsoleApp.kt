@@ -5,17 +5,15 @@ class ConsoleApp {
             if (Manager.currentUser == null) {
                 print(
                     "Choose an option:\n" +
-                            "1 - Register Customer\n" +
-                            "2 - Register Admin\n" +
-                            "3 - Login\n" +
-                            "4 - Exit\n"
+                            "1 - Register user\n" +
+                            "2 - Login\n" +
+                            "3 - Exit\n"
                 )
 
                 when (readln()) {
-                    "1" -> Manager.registerUser(UserType.CUSTOMER)
-                    "2" -> Manager.registerUser(UserType.ADMIN)
-                    "3" -> Manager.loginUser();
-                    "4" -> {
+                    "1" -> Manager.registerUser()
+                    "2" -> Manager.loginUser();
+                    "3" -> {
                         println("- Goodbye!")
                         break
                     }
@@ -23,8 +21,8 @@ class ConsoleApp {
                     else -> println("- Wrong option!")
                 }
             }
-            else{
-                
+            else {
+
             }
         }
     }

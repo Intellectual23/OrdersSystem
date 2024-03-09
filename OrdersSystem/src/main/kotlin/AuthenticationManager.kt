@@ -4,19 +4,27 @@ import java.security.MessageDigest
 class AuthenticationManager {
     public var currentUser: User? = null
     public val users: MutableList<User> = mutableListOf();
-
     init {
-        users.add(User("Admin", hashPassword("AdminPass"), UserType.ADMIN))
+        users.add(Admin("Admin", hashPassword("AdminPass")))
     }
 
-    public fun registerUser(userType: UserType) {
+    public fun registerUser() {
         print("Enter your username: ")
         val username = readln()
         print("Enter your password: ")
         val password = readln();
         print("Repeate your password: ")
         if (password == readln()) {
-            users.add(User(username, hashPassword(password), userType));
+            print(
+                "Choose user type" +
+                        "1 - Customer\n" +
+                        "2 - Admin\n"
+            )
+            when (readln()) {
+                "1" -> users.add(Customer(username, hashPassword(password)));
+                "2" -> users.add(Admin(username, hashPassword(password)));
+                else -> println("- Wrong option!")
+            }
             println("- Registration successful!");
         } else {
             println("- Try again!")
