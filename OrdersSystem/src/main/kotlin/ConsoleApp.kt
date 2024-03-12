@@ -1,7 +1,8 @@
 class ConsoleApp {
-    val manager = AuthenticationManager();
-    val menu = Menu();
-    public fun run() {
+    private val manager = AuthenticationManager();
+    private val menu = Menu();
+    private val orderManager = OrderManager(menu);
+    fun run() {
         while (true) {
             if (manager.currentUser == null) {
                 print(
@@ -21,26 +22,51 @@ class ConsoleApp {
 
                     else -> println("- Wrong option!")
                 }
-            } else if(manager.currentUser is Admin) {
+            } else if (manager.currentUser is Admin) {
                 val admin = manager.currentUser as Admin;
-                print("Choose an option:\n" +
-                        "1 - Add new dish into the menu\n" +
-                        "2 - Delete dish from the menu\n" +
-                        "3 - Edit dish in menu\n" +
-                        "4 - Show the menu\n" +
-                        "5 - Logout\n")
-                when(readln()){
-                    "1" -> admin.AddNewDish(menu);
-                    "2" -> admin.DeleteDish(menu);
-                    "3" -> admin.EditDishes(menu);
+                print(
+                    "Choose an option:\n" +
+                            "1 - Add new dish into the menu\n" +
+                            "2 - Delete dish from the menu\n" +
+                            "3 - Edit dish in menu\n" +
+                            "4 - Show the menu\n" +
+                            "5 - Logout\n"
+                )
+                when (readln()) {
+                    "1" -> admin.addNewDish(menu);
+                    "2" -> admin.deleteDish(menu);
+                    "3" -> admin.editDishes(menu);
                     "4" -> menu.showMenu();
                     "5" -> {
                         manager.currentUser = null
                         println("- Logout successful!")
                     }
+
+                    else -> println("- Wrong option!")
                 }
             } else {
                 val customer = manager.currentUser as Customer;
+                print(
+                    "Choose an option:\n " +
+                            "1 - New Order\n" +
+                            "2 - Add dish to Order\n" +
+                            "3 - Delete Order\n" +
+                            "4 - Pay for Order" +
+                            "5 - Show Menu\n" +
+                            "6 - Logout\n"
+                )
+                when (readln()) {
+                    "1" -> customer.createOrder(orderManager);
+                    "2" -> customer.addToOrder(orderManager);
+                    "3" -> customer.cancelOrder(orderManager);
+                    "4" -> customer.pay();
+                    "5" -> {
+                        manager.currentUser = null
+                        println("- Logout successful!")
+                    }
+
+                    else -> println("- Wrong option!")
+                }
             }
         }
     }

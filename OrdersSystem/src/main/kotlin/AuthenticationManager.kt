@@ -4,8 +4,11 @@ import java.security.MessageDigest
 class AuthenticationManager {
     public var currentUser: User? = null
     public val users: MutableList<User> = mutableListOf();
+
     init {
         users.add(Admin("Admin", hashPassword("AdminPass")))
+        users.add(Customer("Customer1", hashPassword("Pass1")))
+        users.add(Customer("Customer2", hashPassword("Pass2")))
     }
 
     public fun registerUser() {
@@ -23,7 +26,10 @@ class AuthenticationManager {
             when (readln()) {
                 "1" -> users.add(Customer(username, hashPassword(password)));
                 "2" -> users.add(Admin(username, hashPassword(password)));
-                else -> println("- Wrong option!")
+                else ->{
+                    println("- Wrong option!")
+                    return;
+                }
             }
             println("- Registration successful!");
         } else {

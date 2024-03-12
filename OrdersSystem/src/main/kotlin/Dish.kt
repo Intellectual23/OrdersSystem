@@ -1,4 +1,4 @@
-class Dish(var name: String, var cost: Int, var quantity: Int, var difficultInMinutes: Int) {
+class Dish(var name: String, var cost: Int, var quantity: Int, var difficulty: Int) {
 
     fun DishEditMode() {
         while (true) {
@@ -11,10 +11,10 @@ class Dish(var name: String, var cost: Int, var quantity: Int, var difficultInMi
                         "5 - Exit edit mode"
             )
             when (readln()) {
-                "1" -> EditName();
-                "2" -> EditCost();
-                "3" -> EditQuantity()
-                "4" -> EditDifficulty()
+                "1" -> editName();
+                "2" -> editCost();
+                "3" -> editQuantity()
+                "4" -> editDifficulty()
                 "5" -> {
                     break
                 };
@@ -23,27 +23,27 @@ class Dish(var name: String, var cost: Int, var quantity: Int, var difficultInMi
         }
     }
 
-    private fun EditName() {
+    private fun editName() {
         print("Enter new name: ")
         name = readln();
         println("- Name was changed successfully!")
     }
 
-    private fun EditCost() {
+    private fun editCost() {
         print("Enter new cost: ")
         cost = readln().toInt();
         println("- Cost was changed successfully!")
     }
 
-    private fun EditQuantity() {
+    private fun editQuantity() {
         print("Enter new quantity: ")
         quantity = readln().toInt();
         println("- Quantity was changed successfully!")
     }
 
-    private fun EditDifficulty() {
+    private fun editDifficulty() {
         print("Enter new difficulty in minutes: ")
-        quantity = readln().toInt();
+        difficulty = readln().toInt();
         println("- Difficulty was changed successfully!")
     }
 }
