@@ -1,3 +1,5 @@
+import kotlinx.serialization.Serializable
+@Serializable
 class Menu {
     var dishes: MutableList<Dish> = mutableListOf();
 

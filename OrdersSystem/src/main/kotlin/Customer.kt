@@ -1,8 +1,9 @@
-class Customer(username: String, hashedPassword: String) : User(username, hashedPassword) {
-
+import kotlinx.serialization.Serializable
+@Serializable
+class Customer(override val username: String, override val hashedPassword: String) : User() {
     var orders = mutableListOf<Order>();
     fun createOrder(orderManager: OrderManager) {
-        var dishes = mutableListOf<Dish>()
+        val dishes = mutableListOf<Dish>()
         while (true) {
             orderManager.menu.showMenu()
             print("Choose a dish or enter \"next\" to create order: ")

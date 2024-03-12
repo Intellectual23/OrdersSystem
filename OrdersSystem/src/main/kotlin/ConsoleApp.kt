@@ -1,7 +1,6 @@
 class ConsoleApp {
     private val manager = AuthenticationManager();
-    private val menu = Menu();
-    private val orderManager = OrderManager(menu);
+    private val orderManager = OrderManager(DataStorage.menu);
     fun run() {
         while (true) {
             if (manager.currentUser == null) {
@@ -16,6 +15,12 @@ class ConsoleApp {
                     "1" -> manager.registerUser()
                     "2" -> manager.loginUser();
                     "3" -> {
+                        print("- Do you want to safe progress? [yes/no] :)")
+                        when (readln()) {
+                            "yes" -> DataStorage.saveProgress();
+                            "no" -> {}
+                            else -> println("- Wrong option!")
+                        }
                         println("- Goodbye!")
                         break
                     }
@@ -33,10 +38,10 @@ class ConsoleApp {
                             "5 - Logout\n"
                 )
                 when (readln()) {
-                    "1" -> admin.addNewDish(menu);
-                    "2" -> admin.deleteDish(menu);
-                    "3" -> admin.editDishes(menu);
-                    "4" -> menu.showMenu();
+                    "1" -> admin.addNewDish(DataStorage.menu);
+                    "2" -> admin.deleteDish(DataStorage.menu);
+                    "3" -> admin.editDishes(DataStorage.menu);
+                    "4" -> DataStorage.menu.showMenu();
                     "5" -> {
                         manager.currentUser = null
                         println("- Logout successful!")

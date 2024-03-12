@@ -1,3 +1,5 @@
+import kotlinx.serialization.Serializable
+@Serializable
 class Dish(var name: String, var cost: Int, var quantity: Int, var difficulty: Int) {
 
     fun DishEditMode() {

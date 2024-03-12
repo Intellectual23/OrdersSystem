@@ -1,4 +1,7 @@
-class Admin(username: String, hashedPassword: String) : User(username, hashedPassword) {
+import kotlinx.serialization.Serializable
+
+@Serializable
+class Admin(override val username: String, override val hashedPassword: String) : User() {
     public fun addNewDish(menu: Menu){
         menu.addDish();
     }
