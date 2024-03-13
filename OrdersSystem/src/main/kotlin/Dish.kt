@@ -1,16 +1,17 @@
 import kotlinx.serialization.Serializable
+
 @Serializable
 class Dish(var name: String, var cost: Int, var quantity: Int, var difficulty: Int) {
 
     fun DishEditMode() {
         while (true) {
             println(
-                "Welcome to dish edit mode, choose an option:" +
-                        "1 - Edit name" +
-                        "2 - Edit cost" +
-                        "3 - Edit quantity" +
-                        "4 - Edit Difficulty in minutes" +
-                        "5 - Exit edit mode"
+                "Welcome to dish edit mode, choose an option:\n" +
+                        "1 - Edit name\n" +
+                        "2 - Edit cost\n" +
+                        "3 - Edit quantity\n" +
+                        "4 - Edit Difficulty in minutes\n" +
+                        "5 - Exit edit mode\n"
             )
             when (readln()) {
                 "1" -> editName();
@@ -33,19 +34,31 @@ class Dish(var name: String, var cost: Int, var quantity: Int, var difficulty: I
 
     private fun editCost() {
         print("Enter new cost: ")
-        cost = readln().toInt();
-        println("- Cost was changed successfully!")
+        try {
+            cost = readln().toInt();
+            println("- Cost was changed successfully!")
+        } catch (_: Exception) {
+            println("- Incorrect input!")
+        }
     }
 
     private fun editQuantity() {
         print("Enter new quantity: ")
-        quantity = readln().toInt();
-        println("- Quantity was changed successfully!")
+        try {
+            quantity = readln().toInt();
+            println("- Quantity was changed successfully!")
+        } catch (_: Exception) {
+            println("- Incorrect input!")
+        }
     }
 
     private fun editDifficulty() {
-        print("Enter new difficulty in minutes: ")
-        difficulty = readln().toInt();
-        println("- Difficulty was changed successfully!")
+        print("Enter new difficulty: ")
+        try {
+            difficulty = readln().toInt();
+            println("- Difficulty was changed successfully!")
+        } catch (_: Exception) {
+            println("- Incorrect input!")
+        }
     }
 }

@@ -1,17 +1,16 @@
 import kotlin.concurrent.thread
 
-class OrderManager(val menu: Menu) {
-    private val orders = mutableListOf<Order>()
+object OrderManager {
 
     fun createOrder(customer: Customer, dishes: MutableList<Dish>) {
-        val order = Order(orders.size + 1, customer, dishes);
+        val order = Order(DataStorage.orders.size + 1, customer.username, dishes);
         for (i in 0..order.dishes.size - 1) {
             order.totalCost += dishes[i].cost;
             order.totalDifficult += dishes[i].difficulty;
         }
         thread {
             println("--The order processing...")
-            orders.add(order);
+            DataStorage.orders.add(order);
             customer.orders.add(order);
             Thread.sleep(15000);
             println("-The order successfully accepted!\n $order")
@@ -24,7 +23,6 @@ class OrderManager(val menu: Menu) {
             println("-The order is already cooked! You cannot cancel it!")
             return;
         } else {
-            orders.remove(order)
             order.status = OrderStatus.CANCELED
             order.orderThread.interrupt()
             print("-Order was canceled!\n")
@@ -33,6 +31,8 @@ class OrderManager(val menu: Menu) {
 
     fun addToOrder(order: Order, dish: Dish) {
         order.dishes.add(dish);
+        order.totalCost+=dish.cost;
+        order.totalDifficult+=dish.difficulty;
         println("-Dish ${dish.name} was added to order!");
     }
 

@@ -1,24 +1,24 @@
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import kotlin.concurrent.thread
 
 @Serializable
-class Order(val id: Int, val customer: Customer, var dishes: MutableList<Dish>) {
+class Order(val id: Int, val customerName: String, var dishes: MutableList<Dish>) {
     var status = OrderStatus.PROCESSING;
     var totalCost: Int = 0
     var totalDifficult: Int = 0
-    var isPaid = false;
+    var isPaid:Boolean = false;
+    var review: Review? = null
     @Transient val orderThread = Thread {
         try {
             status = OrderStatus.COOKING;
             Thread.sleep(totalDifficult.toLong() * 1000); //Cooking
-            print("-" + this.toString() + "is READY!")
+            print("-" + this.toString() + " is READY!\n")
             status = OrderStatus.READY;
         } catch (_: InterruptedException) {
         }
     }
 
     override fun toString(): String {
-        return "order№${id}, client: ${customer.username}, cost: ${totalCost}, time in minutes: ${totalDifficult}"
+        return "order№${id}, client: ${customerName}, cost: ${totalCost}, time in minutes: ${totalDifficult}"
     }
 }

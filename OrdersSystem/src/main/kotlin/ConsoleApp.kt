@@ -1,21 +1,21 @@
 class ConsoleApp {
-    private val manager = AuthenticationManager();
-    private val orderManager = OrderManager(DataStorage.menu);
     fun run() {
         while (true) {
-            if (manager.currentUser == null) {
+            if (AuthenticationManager.currentUser == null) {
                 print(
                     "Choose an option:\n" +
+                            "0 - Load data from file\n" +
                             "1 - Register user\n" +
                             "2 - Login\n" +
                             "3 - Exit\n"
                 )
 
                 when (readln()) {
-                    "1" -> manager.registerUser()
-                    "2" -> manager.loginUser();
+                    "0" -> DataStorage.loadProgress();
+                    "1" -> AuthenticationManager.registerUser()
+                    "2" -> AuthenticationManager.loginUser();
                     "3" -> {
-                        print("- Do you want to safe progress? [yes/no] :)")
+                        print("- Do you want to save progress? [yes/no] :)")
                         when (readln()) {
                             "yes" -> DataStorage.saveProgress();
                             "no" -> {}
@@ -27,46 +27,49 @@ class ConsoleApp {
 
                     else -> println("- Wrong option!")
                 }
-            } else if (manager.currentUser is Admin) {
-                val admin = manager.currentUser as Admin;
+            } else if (AuthenticationManager.currentUser is Admin) {
+                val admin = AuthenticationManager.currentUser as Admin;
                 print(
                     "Choose an option:\n" +
                             "1 - Add new dish into the menu\n" +
                             "2 - Delete dish from the menu\n" +
                             "3 - Edit dish in menu\n" +
                             "4 - Show the menu\n" +
-                            "5 - Logout\n"
+                            "5 - Show the orders/reviews statistics\n" +
+                            "6 - Logout\n"
                 )
                 when (readln()) {
                     "1" -> admin.addNewDish(DataStorage.menu);
                     "2" -> admin.deleteDish(DataStorage.menu);
                     "3" -> admin.editDishes(DataStorage.menu);
                     "4" -> DataStorage.menu.showMenu();
-                    "5" -> {
-                        manager.currentUser = null
+                    "5" -> admin.showStats();
+                    "6" -> {
+                        AuthenticationManager.currentUser = null
                         println("- Logout successful!")
                     }
 
                     else -> println("- Wrong option!")
                 }
             } else {
-                val customer = manager.currentUser as Customer;
+                val customer = AuthenticationManager.currentUser as Customer;
                 print(
-                    "Choose an option:\n " +
+                    "Choose an option:\n" +
                             "1 - New Order\n" +
                             "2 - Add dish to Order\n" +
                             "3 - Delete Order\n" +
-                            "4 - Pay for Order" +
+                            "4 - Pay for Order\n" +
                             "5 - Show Menu\n" +
                             "6 - Logout\n"
                 )
                 when (readln()) {
-                    "1" -> customer.createOrder(orderManager);
-                    "2" -> customer.addToOrder(orderManager);
-                    "3" -> customer.cancelOrder(orderManager);
+                    "1" -> customer.createOrder();
+                    "2" -> customer.addToOrder();
+                    "3" -> customer.cancelOrder();
                     "4" -> customer.pay();
-                    "5" -> {
-                        manager.currentUser = null
+                    "5" -> DataStorage.menu.showMenu()
+                    "6" -> {
+                        AuthenticationManager.currentUser = null
                         println("- Logout successful!")
                     }
 

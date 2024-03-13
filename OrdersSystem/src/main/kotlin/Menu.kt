@@ -1,12 +1,15 @@
 import kotlinx.serialization.Serializable
+
 @Serializable
 class Menu {
     var dishes: MutableList<Dish> = mutableListOf();
 
     init {
-        dishes.add(Dish("CheeseBurger", 300, 5, 15))
-        dishes.add(Dish("Double CheeseBurger", 450, 5, 20))
-        dishes.add(Dish("French Fries", 150, 10, 10))
+        if (dishes.size == 0) {
+            dishes.add(Dish("CheeseBurger", 300, 5, 15))
+            dishes.add(Dish("Double CheeseBurger", 450, 5, 20))
+            dishes.add(Dish("French Fries", 150, 10, 10))
+        }
     }
 
     public fun addDish() {
@@ -25,7 +28,7 @@ class Menu {
     public fun deleteDish() {
         showMenu();
         print("Choose a dish to delete: ")
-        var dish = dishes[readln().toInt() - 1];
+        val dish = dishes[readln().toInt() - 1];
         println("Dish ${dish.name} was successfully deleted")
         dishes.remove(dish);
     }
@@ -33,7 +36,7 @@ class Menu {
     public fun EditDishes() {
         showMenu()
         print("Choose a dish to edit:")
-        var dish = dishes[readln().toInt() - 1];
+        val dish = dishes[readln().toInt() - 1];
         dish.DishEditMode();
     }
 

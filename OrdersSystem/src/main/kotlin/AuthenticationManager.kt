@@ -1,14 +1,13 @@
 import User
 import java.security.MessageDigest
 
-class AuthenticationManager {
+object AuthenticationManager {
     public var currentUser: User? = null
-    public val users: MutableList<User> = mutableListOf();
 
     init {
-        users.add(Admin("Admin", hashPassword("AdminPass")))
-        users.add(Customer("Customer1", hashPassword("Pass1")))
-        users.add(Customer("Customer2", hashPassword("Pass2")))
+        DataStorage.users.add(Admin("Admin", hashPassword("AdminPass")))
+        DataStorage.users.add(Customer("Customer1", hashPassword("Pass1")))
+        DataStorage.users.add(Customer("Customer2", hashPassword("Pass2")))
     }
 
     public fun registerUser() {
@@ -19,14 +18,14 @@ class AuthenticationManager {
         print("Repeate your password: ")
         if (password == readln()) {
             print(
-                "Choose user type" +
+                "Choose user type:\n" +
                         "1 - Customer\n" +
                         "2 - Admin\n"
             )
             when (readln()) {
-                "1" -> users.add(Customer(username, hashPassword(password)));
-                "2" -> users.add(Admin(username, hashPassword(password)));
-                else ->{
+                "1" -> DataStorage.users.add(Customer(username, hashPassword(password)));
+                "2" -> DataStorage.users.add(Admin(username, hashPassword(password)));
+                else -> {
                     println("- Wrong option!")
                     return;
                 }
@@ -42,7 +41,7 @@ class AuthenticationManager {
         val username = readln()
         print("Enter your password: ")
         val password = readln();
-        val user = users.find { it.username == username }
+        val user = DataStorage.users.find { it.username == username }
         if (user != null && user.passwordCheck(hashPassword(password))) {
             currentUser = user;
             println("- Login successful!")
