@@ -6,9 +6,10 @@ class Order(val id: Int, val customerName: String, var dishes: MutableList<Dish>
     var status = OrderStatus.PROCESSING;
     var totalCost: Int = 0
     var totalDifficult: Int = 0
-    var isPaid:Boolean = false;
+    var isPaid: Boolean = false;
     var review: Review? = null
-    @Transient val orderThread = Thread {
+    @Transient
+    val orderThread = Thread {
         try {
             status = OrderStatus.COOKING;
             Thread.sleep(totalDifficult.toLong() * 1000); //Cooking

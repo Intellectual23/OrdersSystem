@@ -50,6 +50,10 @@ class Customer(override val username: String, override val hashedPassword: Strin
 
             print("choose a dish to add: ")
             val dishToAdd = DataStorage.menu.dishes[readln().toInt() - 1];
+            if (dishToAdd.quantity == 0) {
+                print("-There are no dish left! Try another one.")
+                return;
+            }
             dishToAdd.quantity -= 1;
             OrderManager.addToOrder(orderToAdd, dishToAdd);
         } catch (_: Exception) {

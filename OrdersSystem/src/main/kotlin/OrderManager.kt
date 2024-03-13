@@ -31,8 +31,8 @@ object OrderManager {
 
     fun addToOrder(order: Order, dish: Dish) {
         order.dishes.add(dish);
-        order.totalCost+=dish.cost;
-        order.totalDifficult+=dish.difficulty;
+        order.totalCost += dish.cost;
+        order.totalDifficult += dish.difficulty;
         println("-Dish ${dish.name} was added to order!");
     }
 
